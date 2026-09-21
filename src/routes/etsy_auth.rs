@@ -95,7 +95,7 @@ pub async fn etsy_auth(
         .append_pair("response_type", "code")
         .append_pair("client_id", &keystring)
         .append_pair("redirect_uri", &redirect_uri)
-        .append_pair("scope", "listings_r listings_w")
+        .append_pair("scope", "listings_r listings_w shops_r")
         .append_pair("state", &state)
         .append_pair("code_challenge", &code_challenge)
         .append_pair("code_challenge_method", "S256");
