@@ -13,7 +13,10 @@ use rand::Rng;
 use sha2::{Digest, Sha256};
 use url::Url;
 
-use crate::state::AppState;
+use crate::{
+    services::etsy::save_tokens,
+    state::AppState,
+};
 
 use serde::{Deserialize, Serialize};
 
@@ -213,9 +216,23 @@ pub async fn etsy_callback(
             }
         };
 
-    println!("Etsy OAuth successful!");
-    println!("Granted scopes: {}", token_response.scope);
-    println!("Expires in: {}", token_response.expires_in);
+        let scope = token_response.scope.clone();
+let expires_in = token_response.expires_in;
+
+if let Err(error) = save_tokens(token_response).await {
+    eprintln!("Failed to persist Etsy tokens: {error}");
+
+    return (
+        StatusCode::INTERNAL_SERVER_ERROR,
+        "Etsy authorized successfully, but token storage failed",
+    )
+        .into_response();
+}
+
+println!("Etsy OAuth successful!");
+println!("Granted scopes: {scope}");
+println!("Expires in: {expires_in}");
+
 
     /*
         TEMPORARY.
