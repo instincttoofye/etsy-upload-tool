@@ -8,7 +8,7 @@ primary_region = 'iad'
 
 [build]
 [env]
-  PORT = '8080'
+  PORT = '3020'
 
 [http_service]
   internal_port = 3020
