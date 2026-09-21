@@ -69,6 +69,7 @@ pub async fn get_my_shop(
     let response = client
         .get(url)
         .header("x-api-key", api_key)
+        .bearer_auth(&access_token)
         .send()
         .await?;
 
