@@ -9,7 +9,7 @@ primary_region = 'iad'
 [build]
 [env]
   PORT = '3020'
-  ETSY_REDIRECT_URI=https://etsy-upload-tool-backend.fly.dev/etsy/callback
+  ETSY_REDIRECT_URI='https://etsy-upload-tool-backend.fly.dev/etsy/callback'
 
 [http_service]
   internal_port = 3020

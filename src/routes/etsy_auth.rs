@@ -13,8 +13,6 @@ use rand::Rng;
 use sha2::{Digest, Sha256};
 use url::Url;
 
-
-
 use crate::state::AppState;
 
 use serde::{Deserialize, Serialize};
@@ -32,6 +30,15 @@ pub struct EtsyTokenResponse {
     pub expires_in: u64,
     pub refresh_token: String,
     pub scope: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct StoredEtsyTokens {
+    pub access_token: String,
+    pub refresh_token: String,
+    pub token_type: String,
+    pub scope: String,
+    pub expires_at: u64,
 }
 
 pub async fn etsy_auth(

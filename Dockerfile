@@ -16,5 +16,8 @@ RUN cargo build --release --bin etsy-upload-tool-backend
 # We do not need the Rust toolchain to run the binary!
 FROM debian:bookworm-slim AS runtime
 WORKDIR /app
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libssl3 ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /app/target/release/etsy-upload-tool-backend /usr/local/bin
 ENTRYPOINT ["/usr/local/bin/etsy-upload-tool-backend"]
