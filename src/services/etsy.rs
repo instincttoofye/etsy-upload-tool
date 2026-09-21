@@ -12,6 +12,86 @@ use crate::routes::etsy_auth::{
 
 const TOKEN_PATH: &str = "/data/etsy_tokens.json";
 
+#[derive(Debug, serde::Deserialize)]
+struct EtsyMeResponse {
+    user_id: u64,
+}
+
+#[derive(Debug, serde::Deserialize)]
+pub struct EtsyShopResponse {
+    pub shop_id: u64,
+    pub user_id: u64,
+    pub shop_name: String,
+}
+
+pub async fn get_my_shop(
+) -> Result<EtsyShopResponse, Box<dyn std::error::Error>> {
+    let access_token = get_valid_access_token().await?;
+
+    let keystring = std::env::var("ETSY_KEYSTRING")?;
+    let shared_secret = std::env::var("ETSY_SHARED_SECRET")?;
+
+    let api_key = format!("{keystring}:{shared_secret}");
+
+    let client = reqwest::Client::new();
+
+    // First: find the authenticated Etsy user.
+    let response = client
+        .get("https://api.etsy.com/v3/application/users/me")
+        .header("x-api-key", &api_key)
+        .bearer_auth(&access_token)
+        .send()
+        .await?;
+
+    let status = response.status();
+
+    if !status.is_success() {
+        let body = response.text().await?;
+
+        return Err(
+            format!(
+                "Failed to retrieve Etsy user: {status} - {body}"
+            )
+            .into()
+        );
+    }
+
+    let me = response
+        .json::<EtsyMeResponse>()
+        .await?;
+
+    // Then: retrieve the shop owned by that user.
+    let url = format!(
+        "https://api.etsy.com/v3/application/users/{}/shops",
+        me.user_id
+    );
+
+    let response = client
+        .get(url)
+        .header("x-api-key", api_key)
+        .send()
+        .await?;
+
+    let status = response.status();
+
+    if !status.is_success() {
+        let body = response.text().await?;
+
+        return Err(
+            format!(
+                "Failed to retrieve Etsy shop: {status} - {body}"
+            )
+            .into()
+        );
+    }
+
+    let shop = response
+        .json::<EtsyShopResponse>()
+        .await?;
+
+    Ok(shop)
+}
+
 pub async fn save_tokens(
     response: EtsyTokenResponse,
 ) -> Result<(), Box<dyn std::error::Error>> {

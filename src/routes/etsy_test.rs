@@ -3,22 +3,34 @@ use axum::{
     response::IntoResponse,
 };
 
-use crate::services::etsy::test_authenticated_request;
+use crate::services::etsy::get_my_shop;
 
 pub async fn test_etsy_auth() -> impl IntoResponse {
-    match test_authenticated_request().await {
-        Ok(body) => (
-            StatusCode::OK,
-            body,
-        )
-            .into_response(),
+    match get_my_shop().await {
+        Ok(shop) => {
+            println!(
+                "Connected Etsy shop: {} ({})",
+                shop.shop_name,
+                shop.shop_id
+            );
+
+            (
+                StatusCode::OK,
+                format!(
+                    "Connected to Etsy shop '{}' - shop_id: {}",
+                    shop.shop_name,
+                    shop.shop_id
+                ),
+            )
+                .into_response()
+        }
 
         Err(error) => {
-            eprintln!("Etsy auth test failed: {error}");
+            eprintln!("Etsy shop lookup failed: {error}");
 
             (
                 StatusCode::BAD_GATEWAY,
-                "Etsy authenticated request failed",
+                format!("Etsy shop lookup failed: {error}"),
             )
                 .into_response()
         }
