@@ -13,6 +13,7 @@ use routes::{
         etsy_auth,
         etsy_callback,
     },
+    etsy_test::test_etsy_auth,
     health::health,
     listings::create_listing,
 };
@@ -29,6 +30,7 @@ async fn main() {
         .route("/listings", post(create_listing))
         .route("/etsy/auth", get(etsy_auth))
         .route("/etsy/callback", get(etsy_callback))
+        .route("/etsy/test-auth", get(test_etsy_auth))
         .with_state(state);
     let port = std::env::var("PORT")
     .unwrap_or_else(|_| "3020".to_string());
