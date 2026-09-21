@@ -19,14 +19,18 @@ async fn main() {
     let app = Router::new()
         .route("/health", get(health))
         .route("/listings", post(create_listing));
+    let port = std::env::var("PORT")
+    .unwrap_or_else(|_| "3020".to_string());
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3020")
-        .await
-        .unwrap();
+let address = format!("0.0.0.0:{port}");
 
-    println!("InstinctivePiping Etsy backend running on port 3020");
+let listener = tokio::net::TcpListener::bind(&address)
+    .await
+    .unwrap();
 
-    axum::serve(listener, app)
-        .await
-        .unwrap();
+println!("InstinctivePiping Etsy backend running on {address}");
+
+axum::serve(listener, app)
+    .await
+    .unwrap();
 }
