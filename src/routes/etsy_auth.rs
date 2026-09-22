@@ -9,6 +9,8 @@ use base64::{
     Engine,
 };
 
+use serde::Deserialize;
+
 use rand::Rng;
 use sha2::{Digest, Sha256};
 use url::Url;
@@ -16,9 +18,9 @@ use url::Url;
 use crate::{
     services::etsy::auth::save_tokens,
     state::AppState,
+    models::etsy::auth::EtsyTokenResponse,
 };
 
-use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize)]
 pub struct EtsyCallbackQuery {
@@ -26,23 +28,7 @@ pub struct EtsyCallbackQuery {
     pub state: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct EtsyTokenResponse {
-    pub access_token: String,
-    pub token_type: String,
-    pub expires_in: u64,
-    pub refresh_token: String,
-    pub scope: String,
-}
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct StoredEtsyTokens {
-    pub access_token: String,
-    pub refresh_token: String,
-    pub token_type: String,
-    pub scope: String,
-    pub expires_at: u64,
-}
 
 pub async fn etsy_auth(
     State(app_state): State<AppState>,

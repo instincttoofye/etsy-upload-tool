@@ -5,7 +5,7 @@ use std::{
 
 use tokio::fs;
 
-use crate::routes::etsy_auth::{
+use crate::models::etsy::auth::{
     EtsyTokenResponse,
     StoredEtsyTokens,
 };

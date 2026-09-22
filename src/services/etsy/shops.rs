@@ -1,16 +1,9 @@
 use super::client::EtsyClient;
 
-#[derive(Debug, serde::Deserialize)]
-struct EtsyMeResponse {
-    user_id: u64,
-}
-
-#[derive(Debug, serde::Deserialize)]
-pub struct EtsyShopResponse {
-    pub shop_id: u64,
-    pub user_id: u64,
-    pub shop_name: String,
-}
+use crate::models::etsy::shop::{
+    EtsyMeResponse,
+    EtsyShopResponse,
+};
 
 pub async fn get_my_shop(
 ) -> Result<EtsyShopResponse, Box<dyn std::error::Error>> {

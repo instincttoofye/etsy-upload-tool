@@ -1,41 +1,17 @@
-use crate::models::listing::CreateListingRequest;
+use crate::{
+    models::{
+        etsy::listing::{
+            EtsyCreateDraftRequest,
+            EtsyDraftListing,
+        },
+        listing::CreateListingRequest,
+    },
+};
 
 use super::{
     client::EtsyClient,
     shops::get_my_shop,
 };
-
-#[derive(Debug, serde::Serialize)]
-struct EtsyCreateDraftRequest {
-    quantity: u32,
-    title: String,
-    description: String,
-    price: f64,
-
-    who_made: String,
-    when_made: String,
-
-    taxonomy_id: u64,
-    shipping_profile_id: u64,
-    readiness_state_id: u64,
-
-    materials: String,
-
-    item_weight: f64,
-    item_length: f64,
-    item_width: f64,
-    item_height: f64,
-
-    item_weight_unit: String,
-    item_dimensions_unit: String,
-}
-
-#[derive(Debug, serde::Deserialize)]
-pub struct EtsyDraftListing {
-    pub listing_id: u64,
-    pub title: String,
-    pub state: String,
-}
 
 pub async fn create_draft_listing(
     listing: &CreateListingRequest,
