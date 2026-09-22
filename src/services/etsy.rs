@@ -96,6 +96,13 @@ struct EtsyCreateDraftRequest {
     shipping_profile_id: u64,
     readiness_state_id: u64,
     materials: String,
+
+    item_weight: f64,
+    item_length: f64,
+    item_width: f64,
+    item_height: f64,
+    item_weight_unit: String,
+    item_dimensions_unit: String,
 }
 
 #[derive(Debug, serde::Deserialize)]
@@ -131,6 +138,14 @@ pub async fn create_draft_listing(
         readiness_state_id: 1517708374509,
 
         materials: listing.materials.join(","),
+
+        item_weight: listing.package_dimensions.weight_oz,
+    item_length: listing.package_dimensions.length,
+    item_width: listing.package_dimensions.width,
+    item_height: listing.package_dimensions.height,
+
+    item_weight_unit: "oz".to_string(),
+    item_dimensions_unit: "in".to_string(),
     };
 
     let url = format!(
