@@ -24,6 +24,209 @@ pub struct EtsyShopResponse {
     pub shop_name: String,
 }
 
+#[derive(Debug, serde::Deserialize)]
+pub struct EtsyListingsResponse {
+    pub count: u64,
+    pub results: Vec<EtsyListing>,
+}
+
+#[derive(Debug, serde::Deserialize)]
+pub struct EtsyListing {
+    pub listing_id: u64,
+    pub title: String,
+    pub taxonomy_id: Option<u64>,
+}
+
+#[derive(Debug, serde::Deserialize)]
+pub struct EtsyShippingBatchResponse {
+    pub results: Vec<EtsyListingShipping>,
+}
+
+#[derive(Debug, serde::Deserialize)]
+pub struct EtsyListingShipping {
+    pub listing_id: u64,
+    pub shipping_profile: Option<EtsyShippingProfile>,
+}
+
+#[derive(Debug, serde::Deserialize)]
+pub struct EtsyShippingProfile {
+    pub shipping_profile_id: u64,
+}
+
+#[derive(Debug, serde::Deserialize)]
+pub struct EtsyInventoryBatchResponse {
+    pub results: Vec<EtsyListingInventoryResult>,
+}
+
+#[derive(Debug, serde::Deserialize)]
+pub struct EtsyListingInventoryResult {
+    pub listing_id: u64,
+    pub inventory: Option<EtsyInventory>,
+}
+
+#[derive(Debug, serde::Deserialize)]
+pub struct EtsyInventory {
+    pub products: Vec<EtsyProduct>,
+}
+
+#[derive(Debug, serde::Deserialize)]
+pub struct EtsyProduct {
+    pub offerings: Vec<EtsyOffering>,
+}
+
+#[derive(Debug, serde::Deserialize)]
+pub struct EtsyOffering {
+    pub readiness_state_id: Option<u64>,
+}
+
+pub async fn inspect_reference_listing(
+) -> Result<(u64, u64), Box<dyn std::error::Error>> {
+    let access_token = get_valid_access_token().await?;
+
+    let keystring = std::env::var("ETSY_KEYSTRING")?;
+    let shared_secret = std::env::var("ETSY_SHARED_SECRET")?;
+
+    let api_key = format!("{keystring}:{shared_secret}");
+
+    let listing_id = 4579334215_u64;
+
+    let client = reqwest::Client::new();
+
+    // Shipping profile
+    let shipping_response = client
+        .get(
+            "https://api.etsy.com/v3/application/listings/batch/shipping"
+        )
+        .query(&[
+            ("listing_ids", listing_id.to_string()),
+        ])
+        .header("x-api-key", &api_key)
+        .bearer_auth(&access_token)
+        .send()
+        .await?;
+
+    let shipping_status = shipping_response.status();
+
+    if !shipping_status.is_success() {
+        let body = shipping_response.text().await?;
+
+        return Err(
+            format!(
+                "Shipping lookup failed: {shipping_status} - {body}"
+            )
+            .into()
+        );
+    }
+
+    let shipping =
+        shipping_response
+            .json::<EtsyShippingBatchResponse>()
+            .await?;
+
+    let shipping_profile_id = shipping
+        .results
+        .first()
+        .and_then(|result| result.shipping_profile.as_ref())
+        .map(|profile| profile.shipping_profile_id)
+        .ok_or("No shipping profile found")?;
+
+    // Inventory / processing profile
+    let inventory_response = client
+        .get(
+            "https://api.etsy.com/v3/application/listings/batch/inventory"
+        )
+        .query(&[
+            ("listing_ids", listing_id.to_string()),
+        ])
+        .header("x-api-key", &api_key)
+        .bearer_auth(&access_token)
+        .send()
+        .await?;
+
+    let inventory_status = inventory_response.status();
+
+    if !inventory_status.is_success() {
+        let body = inventory_response.text().await?;
+
+        return Err(
+            format!(
+                "Inventory lookup failed: {inventory_status} - {body}"
+            )
+            .into()
+        );
+    }
+
+    let inventory =
+        inventory_response
+            .json::<EtsyInventoryBatchResponse>()
+            .await?;
+
+    let readiness_state_id = inventory
+        .results
+        .first()
+        .and_then(|result| result.inventory.as_ref())
+        .and_then(|inventory| inventory.products.first())
+        .and_then(|product| product.offerings.first())
+        .and_then(|offering| offering.readiness_state_id)
+        .ok_or("No readiness state found")?;
+
+    Ok((
+        shipping_profile_id,
+        readiness_state_id,
+    ))
+}
+
+pub async fn get_existing_listing(
+) -> Result<EtsyListing, Box<dyn std::error::Error>> {
+    let shop = get_my_shop().await?;
+    let access_token = get_valid_access_token().await?;
+
+    let keystring = std::env::var("ETSY_KEYSTRING")?;
+    let shared_secret = std::env::var("ETSY_SHARED_SECRET")?;
+
+    let api_key = format!("{keystring}:{shared_secret}");
+
+    let url = format!(
+        "https://api.etsy.com/v3/application/shops/{}/listings",
+        shop.shop_id
+    );
+
+    let client = reqwest::Client::new();
+
+    let response = client
+        .get(url)
+        .query(&[
+            ("state", "active"),
+            ("limit", "1"),
+        ])
+        .header("x-api-key", api_key)
+        .bearer_auth(access_token)
+        .send()
+        .await?;
+
+    let status = response.status();
+
+    if !status.is_success() {
+        let body = response.text().await?;
+
+        return Err(
+            format!(
+                "Failed to retrieve Etsy listings: {status} - {body}"
+            )
+            .into()
+        );
+    }
+
+    let listings =
+        response.json::<EtsyListingsResponse>().await?;
+
+    listings
+        .results
+        .into_iter()
+        .next()
+        .ok_or_else(|| "No active Etsy listings found".into())
+}
+
 pub async fn get_my_shop(
 ) -> Result<EtsyShopResponse, Box<dyn std::error::Error>> {
     let access_token = get_valid_access_token().await?;
