@@ -15,7 +15,7 @@ use routes::{
         etsy_callback,
     },
     health::health,
-    routes::listings::{
+    listings::{
         create_listing,
         inspect_listing,
     },
