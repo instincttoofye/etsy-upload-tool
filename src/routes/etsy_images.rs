@@ -18,27 +18,24 @@ pub async fn test_upload_image(
     let mut listing_id: Option<u64> = None;
     let mut image_path: Option<PathBuf> = None;
 
-    loop {
-        let field = match multipart.next_field().await {
-            Ok(Some(field)) => field,
-            Ok(None) => break,
+    while let Some(field) = match multipart.next_field().await {
+        Ok(field) => field,
 
-            Err(error) => {
-                return (
-                    StatusCode::BAD_REQUEST,
-                    Json(serde_json::json!({
-                        "success": false,
-                        "error": error.to_string(),
-                    })),
-                )
-                    .into_response();
-            }
-        };
-
+        Err(error) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(serde_json::json!({
+                    "success": false,
+                    "error": error.to_string(),
+                })),
+            )
+                .into_response();
+        }
+    } {
         let name = field
             .name()
             .unwrap_or("")
-            .to_owned();
+            .to_string();
 
         match name.as_str() {
             "listing_id" => {
@@ -57,15 +54,29 @@ pub async fn test_upload_image(
                     }
                 };
 
-                listing_id = value.parse::<u64>().ok();
+                listing_id = match value.parse::<u64>() {
+                    Ok(id) => Some(id),
+
+                    Err(_) => {
+                        return (
+                            StatusCode::BAD_REQUEST,
+                            Json(serde_json::json!({
+                                "success": false,
+                                "error": "Invalid listing_id",
+                            })),
+                        )
+                            .into_response();
+                    }
+                };
             }
 
             "image" => {
-                // Make this an owned String BEFORE awaiting field.bytes().
                 let file_name = field
                     .file_name()
                     .map(str::to_owned)
-                    .unwrap_or_else(|| "test-image.jpg".to_string());
+                    .unwrap_or_else(|| {
+                        "listing-image.jpg".to_string()
+                    });
 
                 let bytes = match field.bytes().await {
                     Ok(bytes) => bytes,
@@ -138,15 +149,13 @@ pub async fn test_upload_image(
 
     let shop = match get_my_shop().await {
         Ok(shop) => shop,
-    
+
         Err(error) => {
-            // Convert the non-Send error into an owned Send String
-            // before crossing another await.
             let error_message = error.to_string();
-            drop(error);
-    
-            let _ = tokio::fs::remove_file(&image_path).await;
-    
+
+            let _ =
+                tokio::fs::remove_file(&image_path).await;
+
             return (
                 StatusCode::BAD_GATEWAY,
                 Json(serde_json::json!({
@@ -163,9 +172,13 @@ pub async fn test_upload_image(
         listing_id,
         &image_path,
     )
-    .await;
+    .await
+    .map_err(|error| error.to_string());
 
-    let _ = tokio::fs::remove_file(&image_path).await;
+    // We no longer need the temporary local copy,
+    // regardless of whether Etsy accepted the image.
+    let _ =
+        tokio::fs::remove_file(&image_path).await;
 
     match result {
         Ok(image) => (
@@ -183,7 +196,7 @@ pub async fn test_upload_image(
             StatusCode::BAD_GATEWAY,
             Json(serde_json::json!({
                 "success": false,
-                "error": error.to_string(),
+                "error": error,
             })),
         )
             .into_response(),
