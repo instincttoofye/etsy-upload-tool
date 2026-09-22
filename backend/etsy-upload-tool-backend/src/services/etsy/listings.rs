@@ -86,3 +86,38 @@ pub async fn create_draft_listing(
 
     Ok(draft)
 }
+
+pub async fn get_listing(
+    listing_id: u64,
+) -> Result<serde_json::Value, Box<dyn std::error::Error + Send + Sync>> {
+    let etsy = EtsyClient::new().await?;
+
+    let url = format!(
+        "https://api.etsy.com/v3/application/listings/{listing_id}"
+    );
+
+    let response = etsy
+        .client
+        .get(url)
+        .header("x-api-key", &etsy.api_key)
+        .bearer_auth(&etsy.access_token)
+        .send()
+        .await?;
+
+    let status = response.status();
+    let body = response.text().await?;
+
+    if !status.is_success() {
+        return Err(
+            format!(
+                "Failed to retrieve Etsy listing: {status} - {body}"
+            )
+            .into(),
+        );
+    }
+
+    let listing =
+        serde_json::from_str::<serde_json::Value>(&body)?;
+
+    Ok(listing)
+}

@@ -7,11 +7,16 @@ use axum::{
     Json,
 };
 
+use axum::extract::Path;
+
 use crate::{
     models::listing::CreateListingRequest,
     services::etsy::{
         images::upload_listing_image,
-        listings::create_draft_listing,
+        listings::{
+            create_draft_listing,
+            get_listing,
+        },
         shops::get_my_shop,
     },
 };
@@ -336,5 +341,26 @@ async fn cleanup_images(
                 error
             );
         }
+    }
+}
+
+pub async fn inspect_listing(
+    Path(listing_id): Path<u64>,
+) -> impl IntoResponse {
+    match get_listing(listing_id).await {
+        Ok(listing) => (
+            StatusCode::OK,
+            Json(listing),
+        )
+            .into_response(),
+
+        Err(error) => (
+            StatusCode::BAD_GATEWAY,
+            Json(serde_json::json!({
+                "success": false,
+                "error": error.to_string(),
+            })),
+        )
+            .into_response(),
     }
 }
