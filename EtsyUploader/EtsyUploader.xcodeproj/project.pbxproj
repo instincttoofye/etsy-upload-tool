@@ -1,0 +1,554 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		EA38CA703062236A00CBD901 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA38CA563062236900CBD901 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA38CA5D3062236900CBD901;
+			remoteInfo = EtsyUploader;
+		};
+		EA38CA7A3062236A00CBD901 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA38CA563062236900CBD901 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA38CA5D3062236900CBD901;
+			remoteInfo = EtsyUploader;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EA38CA5E3062236900CBD901 /* EtsyUploader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EtsyUploader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA38CA6F3062236A00CBD901 /* EtsyUploaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EtsyUploaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA38CA793062236A00CBD901 /* EtsyUploaderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EtsyUploaderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		EA38CA603062236900CBD901 /* EtsyUploader */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EtsyUploader;
+			sourceTree = "<group>";
+		};
+		EA38CA723062236A00CBD901 /* EtsyUploaderTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EtsyUploaderTests;
+			sourceTree = "<group>";
+		};
+		EA38CA7C3062236A00CBD901 /* EtsyUploaderUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EtsyUploaderUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EA38CA5B3062236900CBD901 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA38CA6C3062236A00CBD901 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA38CA763062236A00CBD901 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EA38CA553062236900CBD901 = {
+			isa = PBXGroup;
+			children = (
+				EA38CA603062236900CBD901 /* EtsyUploader */,
+				EA38CA723062236A00CBD901 /* EtsyUploaderTests */,
+				EA38CA7C3062236A00CBD901 /* EtsyUploaderUITests */,
+				EA38CA5F3062236900CBD901 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EA38CA5F3062236900CBD901 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EA38CA5E3062236900CBD901 /* EtsyUploader.app */,
+				EA38CA6F3062236A00CBD901 /* EtsyUploaderTests.xctest */,
+				EA38CA793062236A00CBD901 /* EtsyUploaderUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EA38CA5D3062236900CBD901 /* EtsyUploader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA38CA833062236A00CBD901 /* Build configuration list for PBXNativeTarget "EtsyUploader" */;
+			buildPhases = (
+				EA38CA5A3062236900CBD901 /* Sources */,
+				EA38CA5B3062236900CBD901 /* Frameworks */,
+				EA38CA5C3062236900CBD901 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EA38CA603062236900CBD901 /* EtsyUploader */,
+			);
+			name = EtsyUploader;
+			packageProductDependencies = (
+			);
+			productName = EtsyUploader;
+			productReference = EA38CA5E3062236900CBD901 /* EtsyUploader.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EA38CA6E3062236A00CBD901 /* EtsyUploaderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA38CA863062236A00CBD901 /* Build configuration list for PBXNativeTarget "EtsyUploaderTests" */;
+			buildPhases = (
+				EA38CA6B3062236A00CBD901 /* Sources */,
+				EA38CA6C3062236A00CBD901 /* Frameworks */,
+				EA38CA6D3062236A00CBD901 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EA38CA713062236A00CBD901 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				EA38CA723062236A00CBD901 /* EtsyUploaderTests */,
+			);
+			name = EtsyUploaderTests;
+			packageProductDependencies = (
+			);
+			productName = EtsyUploaderTests;
+			productReference = EA38CA6F3062236A00CBD901 /* EtsyUploaderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EA38CA783062236A00CBD901 /* EtsyUploaderUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA38CA893062236A00CBD901 /* Build configuration list for PBXNativeTarget "EtsyUploaderUITests" */;
+			buildPhases = (
+				EA38CA753062236A00CBD901 /* Sources */,
+				EA38CA763062236A00CBD901 /* Frameworks */,
+				EA38CA773062236A00CBD901 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EA38CA7B3062236A00CBD901 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				EA38CA7C3062236A00CBD901 /* EtsyUploaderUITests */,
+			);
+			name = EtsyUploaderUITests;
+			packageProductDependencies = (
+			);
+			productName = EtsyUploaderUITests;
+			productReference = EA38CA793062236A00CBD901 /* EtsyUploaderUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EA38CA563062236900CBD901 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					EA38CA5D3062236900CBD901 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					EA38CA6E3062236A00CBD901 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = EA38CA5D3062236900CBD901;
+					};
+					EA38CA783062236A00CBD901 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = EA38CA5D3062236900CBD901;
+					};
+				};
+			};
+			buildConfigurationList = EA38CA593062236900CBD901 /* Build configuration list for PBXProject "EtsyUploader" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EA38CA553062236900CBD901;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = EA38CA5F3062236900CBD901 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EA38CA5D3062236900CBD901 /* EtsyUploader */,
+				EA38CA6E3062236A00CBD901 /* EtsyUploaderTests */,
+				EA38CA783062236A00CBD901 /* EtsyUploaderUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EA38CA5C3062236900CBD901 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA38CA6D3062236A00CBD901 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA38CA773062236A00CBD901 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EA38CA5A3062236900CBD901 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA38CA6B3062236A00CBD901 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA38CA753062236A00CBD901 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EA38CA713062236A00CBD901 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA38CA5D3062236900CBD901 /* EtsyUploader */;
+			targetProxy = EA38CA703062236A00CBD901 /* PBXContainerItemProxy */;
+		};
+		EA38CA7B3062236A00CBD901 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA38CA5D3062236900CBD901 /* EtsyUploader */;
+			targetProxy = EA38CA7A3062236A00CBD901 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		EA38CA813062236A00CBD901 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EA38CA823062236A00CBD901 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		EA38CA843062236A00CBD901 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = EtsyUploader/EtsyUploader.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"EtsyUploader/Preview Content\"";
+				DEVELOPMENT_TEAM = T69CTRUUYT;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "zach-baron.EtsyUploader";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		EA38CA853062236A00CBD901 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = EtsyUploader/EtsyUploader.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"EtsyUploader/Preview Content\"";
+				DEVELOPMENT_TEAM = T69CTRUUYT;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "zach-baron.EtsyUploader";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		EA38CA873062236A00CBD901 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T69CTRUUYT;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "zach-baron.EtsyUploaderTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EtsyUploader.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EtsyUploader";
+			};
+			name = Debug;
+		};
+		EA38CA883062236A00CBD901 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T69CTRUUYT;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "zach-baron.EtsyUploaderTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EtsyUploader.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EtsyUploader";
+			};
+			name = Release;
+		};
+		EA38CA8A3062236A00CBD901 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T69CTRUUYT;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "zach-baron.EtsyUploaderUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = EtsyUploader;
+			};
+			name = Debug;
+		};
+		EA38CA8B3062236A00CBD901 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T69CTRUUYT;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "zach-baron.EtsyUploaderUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = EtsyUploader;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EA38CA593062236900CBD901 /* Build configuration list for PBXProject "EtsyUploader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA38CA813062236A00CBD901 /* Debug */,
+				EA38CA823062236A00CBD901 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA38CA833062236A00CBD901 /* Build configuration list for PBXNativeTarget "EtsyUploader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA38CA843062236A00CBD901 /* Debug */,
+				EA38CA853062236A00CBD901 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA38CA863062236A00CBD901 /* Build configuration list for PBXNativeTarget "EtsyUploaderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA38CA873062236A00CBD901 /* Debug */,
+				EA38CA883062236A00CBD901 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA38CA893062236A00CBD901 /* Build configuration list for PBXNativeTarget "EtsyUploaderUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA38CA8A3062236A00CBD901 /* Debug */,
+				EA38CA8B3062236A00CBD901 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EA38CA563062236900CBD901 /* Project object */;
+}
