@@ -3,11 +3,17 @@ use axum::{
     response::IntoResponse,
 };
 
-use crate::services::etsy::inspect_reference_listing;
+use crate::services::etsy::get_existing_listing;
 
 pub async fn test_etsy_auth() -> impl IntoResponse {
-    match inspect_reference_listing().await {
-        Ok((shipping_profile_id, readiness_state_id)) => {
+    match get_existing_listing().await {
+        Ok(listing) => {
+            println!(
+                "Reference Etsy listing: {} ({})",
+                listing.title,
+                listing.listing_id
+            );
+
             (
                 StatusCode::OK,
                 format!(
@@ -27,14 +33,12 @@ pub async fn test_etsy_auth() -> impl IntoResponse {
         }
 
         Err(error) => {
-            eprintln!(
-                "Reference listing inspection failed: {error}"
-            );
+            eprintln!("Etsy listing lookup failed: {error}");
 
             (
                 StatusCode::BAD_GATEWAY,
                 format!(
-                    "Reference listing inspection failed: {error}"
+                    "Etsy listing lookup failed: {error}"
                 ),
             )
                 .into_response()
