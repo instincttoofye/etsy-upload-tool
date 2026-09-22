@@ -10,6 +10,8 @@ use crate::routes::etsy_auth::{
     StoredEtsyTokens,
 };
 
+use crate::models::listing::CreateListingRequest;
+
 const TOKEN_PATH: &str = "/data/etsy_tokens.json";
 
 #[derive(Debug, serde::Deserialize)]
@@ -93,6 +95,7 @@ struct EtsyCreateDraftRequest {
     taxonomy_id: u64,
     shipping_profile_id: u64,
     readiness_state_id: u64,
+    materials: Vec<String>,
 }
 
 #[derive(Debug, serde::Deserialize)]
@@ -100,6 +103,76 @@ pub struct EtsyDraftListing {
     pub listing_id: u64,
     pub title: String,
     pub state: String,
+}
+
+pub async fn create_draft_listing(
+    listing: &CreateListingRequest,
+) -> Result<EtsyDraftListing, Box<dyn std::error::Error>> {
+    let shop = get_my_shop().await?;
+    let access_token = get_valid_access_token().await?;
+
+    let keystring = std::env::var("ETSY_KEYSTRING")?;
+    let shared_secret = std::env::var("ETSY_SHARED_SECRET")?;
+
+    let api_key = format!("{keystring}:{shared_secret}");
+
+    let payload = EtsyCreateDraftRequest {
+        quantity: 1,
+
+        title: listing.title.clone(),
+        description: listing.description.clone(),
+        price: listing.price,
+
+        who_made: "i_did".to_string(),
+        when_made: "2020_2026".to_string(),
+
+        taxonomy_id: 1647,
+        shipping_profile_id: 315704763375,
+        readiness_state_id: 1517708374509,
+
+        materials: listing.materials.clone(),
+    };
+
+    let url = format!(
+        "https://api.etsy.com/v3/application/shops/{}/listings",
+        shop.shop_id
+    );
+
+    let client = reqwest::Client::new();
+
+    let response = client
+        .post(url)
+        .query(&[
+            ("legacy", "false"),
+        ])
+        .header("x-api-key", api_key)
+        .bearer_auth(access_token)
+        .form(&payload)
+        .send()
+        .await?;
+
+    let status = response.status();
+    let body = response.text().await?;
+
+    if !status.is_success() {
+        return Err(
+            format!(
+                "Failed to create Etsy draft: {status} - {body}"
+            )
+            .into()
+        );
+    }
+
+    let draft =
+        serde_json::from_str::<EtsyDraftListing>(&body)?;
+
+    println!(
+        "Created Etsy draft '{}' ({})",
+        draft.title,
+        draft.listing_id
+    );
+
+    Ok(draft)
 }
 
 pub async fn inspect_reference_listing(
