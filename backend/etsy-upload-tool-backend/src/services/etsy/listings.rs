@@ -4,7 +4,10 @@ use crate::{
             EtsyCreateDraftRequest,
             EtsyDraftListing,
         },
-        listing::CreateListingRequest,
+        listing::{
+            CreateListingRequest,
+            ProductType,
+        },
     },
 };
 
@@ -13,11 +16,50 @@ use super::{
     shops::get_my_shop,
 };
 
+struct EtsyListingConfig {
+    taxonomy_id: u64,
+    shipping_profile_id: u64,
+    readiness_state_id: u64,
+}
+
+fn listing_config(
+    product_type: &ProductType,
+) -> Result<EtsyListingConfig, Box<dyn std::error::Error + Send + Sync>> {
+    match product_type {
+        ProductType::Pipe => {
+            Ok(EtsyListingConfig {
+                taxonomy_id: 1647,
+                shipping_profile_id: 315704763375,
+                readiness_state_id: 1517708374509,
+            })
+        }
+
+        ProductType::Tamper => {
+            Ok(EtsyListingConfig {
+                taxonomy_id: 1866,
+                shipping_profile_id: 315704763375,
+                readiness_state_id: 1517708374509,
+            })
+        }
+
+        ProductType::Ashtray => {
+            Err(
+                "Ashtray listings are not configured yet"
+                    .into()
+            )
+        }
+    }
+}
+
 pub async fn create_draft_listing(
     listing: &CreateListingRequest,
 ) -> Result<EtsyDraftListing, Box<dyn std::error::Error + Send + Sync>> {
     let shop = get_my_shop().await?;
     let etsy = EtsyClient::new().await?;
+
+    let config = listing_config(
+        &listing.product_type
+    )?;
 
     let payload = EtsyCreateDraftRequest {
         quantity: 1,
@@ -29,9 +71,9 @@ pub async fn create_draft_listing(
         who_made: "i_did".to_string(),
         when_made: "2020_2026".to_string(),
 
-        taxonomy_id: 1647,
-        shipping_profile_id: 315704763375,
-        readiness_state_id: 1517708374509,
+        taxonomy_id: config.taxonomy_id,
+        shipping_profile_id: config.shipping_profile_id,
+        readiness_state_id: config.readiness_state_id,
 
         materials: listing.materials.join(","),
 
@@ -85,39 +127,4 @@ pub async fn create_draft_listing(
     );
 
     Ok(draft)
-}
-
-pub async fn get_listing(
-    listing_id: u64,
-) -> Result<serde_json::Value, Box<dyn std::error::Error + Send + Sync>> {
-    let etsy = EtsyClient::new().await?;
-
-    let url = format!(
-        "https://api.etsy.com/v3/application/listings/{listing_id}"
-    );
-
-    let response = etsy
-        .client
-        .get(url)
-        .header("x-api-key", &etsy.api_key)
-        .bearer_auth(&etsy.access_token)
-        .send()
-        .await?;
-
-    let status = response.status();
-    let body = response.text().await?;
-
-    if !status.is_success() {
-        return Err(
-            format!(
-                "Failed to retrieve Etsy listing: {status} - {body}"
-            )
-            .into(),
-        );
-    }
-
-    let listing =
-        serde_json::from_str::<serde_json::Value>(&body)?;
-
-    Ok(listing)
 }
