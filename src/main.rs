@@ -16,7 +16,6 @@ use routes::{
     },
     health::health,
     listings::create_listing,
-    etsy_images::test_upload_image,
 };
 
 use state::AppState;
@@ -29,14 +28,13 @@ async fn main() {
 
     let app = Router::new()
         .route("/health", get(health))
-        .route("/listings", post(create_listing))
-        .route("/etsy/auth", get(etsy_auth))
-        .route("/etsy/callback", get(etsy_callback))
         .route(
-            "/etsy/test-image", 
-            post(test_upload_image)
+            "/listings", 
+            post(create_listing)
             .layer(DefaultBodyLimit::disable()),
         )
+        .route("/etsy/auth", get(etsy_auth))
+        .route("/etsy/callback", get(etsy_callback))
         .with_state(state);
     let port = std::env::var("PORT")
     .unwrap_or_else(|_| "3020".to_string());
