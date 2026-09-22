@@ -95,7 +95,7 @@ struct EtsyCreateDraftRequest {
     taxonomy_id: u64,
     shipping_profile_id: u64,
     readiness_state_id: u64,
-    materials: Vec<String>,
+    materials: String,
 }
 
 #[derive(Debug, serde::Deserialize)]
@@ -130,7 +130,7 @@ pub async fn create_draft_listing(
         shipping_profile_id: 315704763375,
         readiness_state_id: 1517708374509,
 
-        materials: listing.materials.clone(),
+        materials: listing.materials.join(","),
     };
 
     let url = format!(
