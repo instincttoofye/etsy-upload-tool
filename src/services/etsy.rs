@@ -134,22 +134,24 @@ pub async fn create_draft_listing(
     };
 
     let url = format!(
-        "https://api.etsy.com/v3/application/shops/{}/listings",
+        "https://api.etsy.com/v3/application/shops/{}/listings?legacy=false",
         shop.shop_id
     );
-
+    
     let client = reqwest::Client::new();
-
+    
     let response = client
         .post(url)
-        .query(&[
-            ("legacy", "false"),
-        ])
         .header("x-api-key", api_key)
         .bearer_auth(access_token)
         .form(&payload)
         .send()
-        .await?;
+        .await
+        .map_err(|error| {
+            format!(
+                "Failed to build/send Etsy draft request: {error:#?}"
+            )
+        })?;
 
     let status = response.status();
     let body = response.text().await?;
