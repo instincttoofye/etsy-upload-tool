@@ -14,7 +14,7 @@ use sha2::{Digest, Sha256};
 use url::Url;
 
 use crate::{
-    services::etsy::save_tokens,
+    services::etsy::auth::save_tokens,
     state::AppState,
 };
 

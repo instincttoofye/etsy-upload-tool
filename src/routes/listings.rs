@@ -6,7 +6,7 @@ use axum::{
 
 use crate::{
     models::listing::CreateListingRequest,
-    services::etsy::create_draft_listing,
+    services::etsy::listings::create_draft_listing,
 };
 
 pub async fn create_listing(
