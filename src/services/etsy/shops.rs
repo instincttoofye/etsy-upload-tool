@@ -6,7 +6,7 @@ use crate::models::etsy::shop::{
 };
 
 pub async fn get_my_shop(
-) -> Result<EtsyShopResponse, Box<dyn std::error::Error>> {
+) -> Result<EtsyShopResponse, Box<dyn std::error::Error + Send + Sync>> {
     let etsy = EtsyClient::new().await?;
 
     let response = etsy

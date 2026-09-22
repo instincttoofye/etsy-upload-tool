@@ -15,7 +15,7 @@ use super::{
 
 pub async fn create_draft_listing(
     listing: &CreateListingRequest,
-) -> Result<EtsyDraftListing, Box<dyn std::error::Error>> {
+) -> Result<EtsyDraftListing, Box<dyn std::error::Error + Send + Sync>> {
     let shop = get_my_shop().await?;
     let etsy = EtsyClient::new().await?;
 

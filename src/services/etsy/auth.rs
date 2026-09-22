@@ -14,7 +14,7 @@ const TOKEN_PATH: &str = "/data/etsy_tokens.json";
 
 pub async fn save_tokens(
     response: EtsyTokenResponse,
-) -> Result<(), Box<dyn std::error::Error>> {
+) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let now = current_timestamp()?;
 
     let stored_tokens = StoredEtsyTokens {
@@ -38,7 +38,7 @@ pub async fn save_tokens(
 }
 
 pub async fn load_tokens(
-) -> Result<StoredEtsyTokens, Box<dyn std::error::Error>> {
+) -> Result<StoredEtsyTokens, Box<dyn std::error::Error + Send + Sync>> {
     let json = fs::read_to_string(TOKEN_PATH).await?;
 
     let tokens =
@@ -48,7 +48,7 @@ pub async fn load_tokens(
 }
 
 pub async fn get_valid_access_token(
-) -> Result<String, Box<dyn std::error::Error>> {
+) -> Result<String, Box<dyn std::error::Error + Send + Sync>> {
     let tokens = load_tokens().await?;
 
     if token_is_expired(&tokens)? {
@@ -64,7 +64,7 @@ pub async fn get_valid_access_token(
 }
 
 fn current_timestamp(
-) -> Result<u64, Box<dyn std::error::Error>> {
+) -> Result<u64, Box<dyn std::error::Error + Send + Sync>> {
     Ok(
         SystemTime::now()
             .duration_since(UNIX_EPOCH)?
@@ -74,7 +74,7 @@ fn current_timestamp(
 
 fn token_is_expired(
     tokens: &StoredEtsyTokens,
-) -> Result<bool, Box<dyn std::error::Error>> {
+) -> Result<bool, Box<dyn std::error::Error + Send + Sync>> {
     let now = current_timestamp()?;
 
     Ok(now >= tokens.expires_at.saturating_sub(60))
@@ -82,7 +82,7 @@ fn token_is_expired(
 
 async fn refresh_tokens(
     refresh_token: &str,
-) -> Result<StoredEtsyTokens, Box<dyn std::error::Error>> {
+) -> Result<StoredEtsyTokens, Box<dyn std::error::Error + Send + Sync>> {
     let keystring = std::env::var("ETSY_KEYSTRING")?;
 
     let client = reqwest::Client::new();

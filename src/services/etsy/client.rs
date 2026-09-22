@@ -6,7 +6,7 @@ pub struct EtsyClient {
 
 impl EtsyClient {
     pub async fn new(
-    ) -> Result<Self, Box<dyn std::error::Error>> {
+    ) -> Result<Self, Box<dyn std::error::Error + Send + Sync>> {
         let access_token =
             super::auth::get_valid_access_token().await?;
 
