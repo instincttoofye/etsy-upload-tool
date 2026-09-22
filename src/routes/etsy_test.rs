@@ -11,9 +11,16 @@ pub async fn test_etsy_auth() -> impl IntoResponse {
             (
                 StatusCode::OK,
                 format!(
-                    "taxonomy_id: 1647\n\
-                     shipping_profile_id: {shipping_profile_id}\n\
-                     readiness_state_id: {readiness_state_id}"
+                    "Listing: {}\n\
+                     listing_id: {}\n\
+                     taxonomy_id: {:?}\n\
+                     who_made: {:?}\n\
+                     when_made: {:?}",
+                    listing.title,
+                    listing.listing_id,
+                    listing.taxonomy_id,
+                    listing.who_made,
+                    listing.when_made,
                 ),
             )
                 .into_response()
