@@ -144,6 +144,7 @@ struct CreateListingRequest: Codable {
     var price: Double
     var description: String
     var materials: [String]
+    var tags: [String]
     var productDimensions: ProductDimensions
     var packageDimensions: PackageDimensions
 
@@ -153,6 +154,7 @@ struct CreateListingRequest: Codable {
         case price
         case description
         case materials
+        case tags
         case productDimensions = "product_dimensions"
         case packageDimensions = "package_dimensions"
     }

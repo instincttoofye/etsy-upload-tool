@@ -30,6 +30,9 @@ struct CreateListingView: View {
     @State private var packageWeight = ""
 
     @State private var imageURLs: [URL] = []
+    
+    @State private var tagInput = ""
+    @State private var tags: [String] = []
 
     @State private var showingImageImporter = false
     @State private var isUploading = false
@@ -143,6 +146,8 @@ struct CreateListingView: View {
                 "Materials — comma separated",
                 text: $materials
             )
+            
+            tagEditor
 
             TextEditor(
                 text: $description
@@ -151,6 +156,126 @@ struct CreateListingView: View {
             .overlay {
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(.secondary.opacity(0.3))
+            }
+        }
+    }
+    
+    private var tagEditor: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 8
+        ) {
+            HStack {
+                Text("Tags")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+
+                Spacer()
+
+                Text("\(tags.count)/13")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
+            HStack {
+                TextField(
+                    "Add tag",
+                    text: $tagInput
+                )
+                .onSubmit {
+                    addTag()
+                }
+
+                Button("Add") {
+                    addTag()
+                }
+                .disabled(
+                    tagInput.trimmingCharacters(
+                        in: .whitespacesAndNewlines
+                    )
+                    .isEmpty ||
+                    tags.count >= 13
+                )
+            }
+
+            if !tags.isEmpty {
+                tagList
+            }
+        }
+    }
+    
+    private func addTag() {
+        let tag = tagInput.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+
+        guard !tag.isEmpty else {
+            return
+        }
+
+        guard tags.count < 13 else {
+            statusMessage =
+                "Etsy allows a maximum of 13 tags."
+
+            return
+        }
+
+        guard tag.count <= 20 else {
+            statusMessage =
+                "Etsy tags can be at most 20 characters."
+
+            return
+        }
+
+        guard !tags.contains(
+            where: {
+                $0.caseInsensitiveCompare(tag) == .orderedSame
+            }
+        ) else {
+            statusMessage =
+                "\"\(tag)\" is already in your tags."
+
+            return
+        }
+
+        tags.append(tag)
+        tagInput = ""
+    }
+    
+    private var tagList: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 6
+        ) {
+            ForEach(
+                Array(tags.enumerated()),
+                id: \.offset
+            ) { index, tag in
+                HStack(spacing: 6) {
+                    Text(tag)
+
+                    Button {
+                        tags.remove(at: index)
+                    } label: {
+                        Image(
+                            systemName: "xmark.circle.fill"
+                        )
+                        .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+
+                    Spacer()
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(
+                    .secondary.opacity(0.12)
+                )
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: 8
+                    )
+                )
             }
         }
     }
@@ -366,6 +491,7 @@ struct CreateListingView: View {
             price: price,
             description: description,
             materials: materials,
+            tags: tags,
             productDimensions: productDimensions,
             packageDimensions: PackageDimensions(
                 length: packageLength,
