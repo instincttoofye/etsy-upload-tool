@@ -231,6 +231,56 @@ pub async fn create_listing(
         }
     };
 
+    if listing.tags.len() > 13 {
+        cleanup_images(&images).await;
+    
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(serde_json::json!({
+                "success": false,
+                "error": "Etsy allows a maximum of 13 tags",
+            })),
+        )
+            .into_response();
+    }
+    
+    if let Some(tag) = listing
+        .tags
+        .iter()
+        .find(|tag| tag.chars().count() > 20)
+    {
+        cleanup_images(&images).await;
+    
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(serde_json::json!({
+                "success": false,
+                "error": format!(
+                    "Etsy tags may not exceed 20 characters: \"{}\"",
+                    tag
+                ),
+            })),
+        )
+            .into_response();
+    }
+
+    if listing
+    .tags
+    .iter()
+    .any(|tag| tag.trim().is_empty())
+{
+    cleanup_images(&images).await;
+
+    return (
+        StatusCode::BAD_REQUEST,
+        Json(serde_json::json!({
+            "success": false,
+            "error": "Tags cannot be empty",
+        })),
+    )
+        .into_response();
+}
+
     if images.is_empty() {
         return (
             StatusCode::BAD_REQUEST,

@@ -46,6 +46,7 @@ pub struct CreateListingRequest {
     pub price: f64,
     pub description: String,
     pub materials: Vec<String>,
+    pub tags: Vec<String>,
 
     pub product_dimensions: ProductDimensions,
     pub package_dimensions: PackageDimensions,

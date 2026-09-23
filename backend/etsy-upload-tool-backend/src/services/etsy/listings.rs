@@ -84,6 +84,7 @@ pub async fn create_draft_listing(
         return_policy_id: config.return_policy_id,
 
         materials: listing.materials.join(","),
+        tags: listing.tags.join(","),
 
         item_weight: listing.package_dimensions.weight_oz,
         item_length: listing.package_dimensions.length,

@@ -15,6 +15,7 @@ pub struct EtsyCreateDraftRequest {
     pub return_policy_id: u64,
 
     pub materials: String,
+    pub tags: String,
 
     pub item_weight: f64,
     pub item_length: f64,
