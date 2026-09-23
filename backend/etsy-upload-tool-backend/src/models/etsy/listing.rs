@@ -11,6 +11,7 @@ pub struct EtsyCreateDraftRequest {
     pub taxonomy_id: u64,
     pub shipping_profile_id: u64,
     pub readiness_state_id: u64,
+    pub return_policy_id: u64,
 
     pub materials: String,
 
