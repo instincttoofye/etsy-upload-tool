@@ -18,6 +18,7 @@ use super::{
 
 struct EtsyListingConfig {
     taxonomy_id: u64,
+    shop_section_id: u64,
     shipping_profile_id: u64,
     readiness_state_id: u64,
     return_policy_id: u64,
@@ -30,6 +31,7 @@ fn listing_config(
         ProductType::Pipe => {
             Ok(EtsyListingConfig {
                 taxonomy_id: 1647,
+                shop_section_id: 60450910,
                 shipping_profile_id: 315704763375,
                 readiness_state_id: 1517708374509,
                 return_policy_id: 1516472977734,
@@ -39,6 +41,7 @@ fn listing_config(
         ProductType::Tamper => {
             Ok(EtsyListingConfig {
                 taxonomy_id: 1866,
+                shop_section_id: 60470571,
                 shipping_profile_id: 315704763375,
                 readiness_state_id: 1517708374509,
                 return_policy_id: 1516472977734,
@@ -75,6 +78,7 @@ pub async fn create_draft_listing(
         when_made: "2020_2026".to_string(),
 
         taxonomy_id: config.taxonomy_id,
+        shop_section_id: config.shop_section_id,
         shipping_profile_id: config.shipping_profile_id,
         readiness_state_id: config.readiness_state_id,
         return_policy_id: config.return_policy_id,
