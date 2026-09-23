@@ -15,7 +15,10 @@ use routes::{
         etsy_callback,
     },
     health::health,
-    listings::create_listing,
+    listings::{
+        create_listing,
+        inspect_shop_sections,
+    },
 };
 
 use state::AppState;
@@ -35,6 +38,10 @@ async fn main() {
         )
         .route("/etsy/auth", get(etsy_auth))
         .route("/etsy/callback", get(etsy_callback))
+        .route(
+            "/etsy/shop-sections",
+            get(inspect_shop_sections),
+        )
         .with_state(state);
     let port = std::env::var("PORT")
     .unwrap_or_else(|_| "3020".to_string());

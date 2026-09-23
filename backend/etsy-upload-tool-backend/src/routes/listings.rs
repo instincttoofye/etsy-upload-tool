@@ -14,12 +14,67 @@ use crate::{
     services::etsy::{
         images::upload_listing_image,
         listings::create_draft_listing,
-        shops::get_my_shop,
+        shops::{
+            get_my_shop,
+            get_shop_sections,
+        },
     },
 };
 
 struct UploadedImage {
     path: PathBuf,
+}
+
+pub async fn inspect_shop_sections() -> impl IntoResponse {
+    let shop = match get_my_shop().await {
+        Ok(shop) => shop,
+
+        Err(error) => {
+            return (
+                StatusCode::BAD_GATEWAY,
+                Json(serde_json::json!({
+                    "success": false,
+                    "error": error.to_string(),
+                })),
+            )
+                .into_response();
+        }
+    };
+
+    match get_shop_sections(shop.shop_id).await {
+        Ok(sections) => (
+            StatusCode::OK,
+            Json(serde_json::json!({
+                "count": sections.count,
+                "sections": sections
+                    .results
+                    .iter()
+                    .map(|section| {
+                        serde_json::json!({
+                            "shop_section_id":
+                                section.shop_section_id,
+
+                            "title":
+                                section.title,
+
+                            "active_listing_count":
+                                section.active_listing_count,
+                        })
+                    })
+                    .collect::<Vec<_>>(),
+            })),
+        )
+            .into_response(),
+
+        Err(error) => (
+            StatusCode::BAD_GATEWAY,
+            Json(serde_json::json!({
+                "success": false,
+                "error": error.to_string(),
+            })),
+        )
+            .into_response(),
+    }
 }
 
 pub async fn create_listing(
